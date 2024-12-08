@@ -5,6 +5,8 @@ if (!require("tidyr")) install.packages("tidyr", dependencies = TRUE)
 if (!require("sf")) install.packages("sf", dependencies = TRUE)
 if (!require("DT")) install.packages("DT", dependencies = TRUE)
 if (!require("plotly")) install.packages("plotly", dependencies = TRUE)
+if (!require("eurostat")) install.packages("eurostat", dependencies = TRUE)
+
 library(shiny)
 library(leaflet)
 library(dplyr)
@@ -14,6 +16,7 @@ library(DT)
 library(plotly)
 library(shiny)
 library(leaflet)
+library(eurostat)
 
 
 # Funkcja do pobrania danych (dla PKB i bezrobocia)
