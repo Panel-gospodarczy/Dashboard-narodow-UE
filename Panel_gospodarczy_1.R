@@ -18,6 +18,7 @@ library(shiny)
 library(leaflet)
 library(eurostat)
 
+
 # Funkcja do pobrania danych 
 get_economic_data <- function(indicator) {
   data <- eurostat::get_eurostat(indicator, time_format = "num") %>%
@@ -35,9 +36,11 @@ get_economic_data <- function(indicator) {
 gdp_pps <- get_economic_data("tec00114") #PKB PPS
 unemp <- get_economic_data("tps00203") #bezrobocie
 expend<-get_economic_data("tec00023")  #Wydatki rządowe (% PKB)
-
+gini<-get_economic_data("tessi190")  #wskaznik giniego
 # Lista dostępnych wskaźników
-indicators <- c("PKB per capita PPS (średnia UE=100)" = "tec00114", "Bezrobocie" = "tps00203","Wydatki rządowe (% PKB)" = "tec00023")
+indicators <- c("PKB per capita PPS (średnia UE=100)" = "tec00114",
+                "Bezrobocie" = "tps00203","Wydatki rządowe (% PKB)" = "tec00023",
+                "Nierówności dochodowe"="tessi190")
 
 # Definiowanie współrzędnych geograficznych
 coordinates <- data.frame(
@@ -66,6 +69,7 @@ merge_data_with_coordinates <- function(data, coordinates) {
 merged_data_gdp <- merge_data_with_coordinates(gdp_pps, coordinates)
 merged_data_unemp <- merge_data_with_coordinates(unemp, coordinates)
 merged_data_expend<-merge_data_with_coordinates(expend, coordinates)
+merged_data_gini<-merge_data_with_coordinates(gini, coordinates)
 
 # Tworzenie obiektów sf (sf = Simple Features)
 countries_sf_gdp <- st_as_sf(merged_data_gdp, coords = c("longitude", "latitude"), crs = 4326)
@@ -78,7 +82,8 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("indicator", "Wybierz wskaźnik:", 
-                  choices = c("PKB per capita PPS (średnia UE=100)", "Bezrobocie (%)", "Wydatki rządowe (% PKB)")),  # Wybór wskaźnika
+                  choices = c("PKB per capita PPS (średnia UE=100)", "Bezrobocie (%)", 
+                              "Wydatki rządowe (% PKB)", "Nierówności dochodowe")),  # Wybór wskaźnika
       sliderInput("weight", "Waga wskaźnika kompozytowego:", 0, 1, 0.5)
     ),
     mainPanel(
@@ -109,8 +114,10 @@ server <- function(input, output, session) {
         data <- merged_data_gdp
       } else if(input$indicator == "Bezrobocie (%)") {
         data <- merged_data_unemp
-      } else {
+      } else if(input$indicator == "Wydatki rządowe (% PKB)") {
         data <- merged_data_expend
+      } else if (input$indicator == "Nierówności dochodowe") {
+        data<-merged_data_gini
       }
       data
     })()
@@ -141,10 +148,11 @@ server <- function(input, output, session) {
       merged_data_gdp %>% filter(iso2 == country_iso2)
     } else if(input$indicator == "Bezrobocie (%)") {
       merged_data_unemp %>% filter(iso2 == country_iso2)
-    } else {
+    } else if (input$indicator == "Wydatki rządowe (% PKB)") {
       merged_data_expend %>% filter(iso2 == country_iso2)
+    } else if (input$indicator == "Nierówności dochodowe") {
+      merged_data_gini %>% filter(iso2 == country_iso2)
     }
-    
     # Jeśli dane istnieją, wyświetlamy szczegóły
     output$selectedCountryDetails <- renderText({
       paste("Kraj:", selected_data$country, 
@@ -167,8 +175,10 @@ server <- function(input, output, session) {
       data <- merged_data_gdp
     } else if(input$indicator == "Bezrobocie (%)") {
       data <- merged_data_unemp
-    } else {
+    } else if (input$indicator == "Wydatki rządowe (% PKB)") {
       data <- merged_data_expend
+    } else if (input$indicator == "Nierówności dochodowe") {
+      data <- merged_data_gini
     }
     data %>%
       arrange(desc(value)) %>%
