@@ -37,10 +37,11 @@ gdp_pps <- get_economic_data("tec00114") #PKB PPS
 unemp <- get_economic_data("tps00203") #bezrobocie
 expend<-get_economic_data("tec00023")  #Wydatki rządowe (% PKB)
 gini<-get_economic_data("tessi190")  #wskaznik giniego
+poverty<-get_economic_data("tespm010") #zagrozeni ubóstwem
 # Lista dostępnych wskaźników
 indicators <- c("PKB per capita PPS (średnia UE=100)" = "tec00114",
                 "Bezrobocie" = "tps00203","Wydatki rządowe (% PKB)" = "tec00023",
-                "Nierówności dochodowe"="tessi190")
+                "Nierówności dochodowe"="tessi190","Odsetek zagrożonych ubóśtwem"="tespm010")
 
 # Definiowanie współrzędnych geograficznych
 coordinates <- data.frame(
@@ -66,14 +67,38 @@ merge_data_with_coordinates <- function(data, coordinates) {
 }
 
 # Połączenie danych PKB z współrzędnymi
-merged_data_gdp <- merge_data_with_coordinates(gdp_pps, coordinates)
-merged_data_unemp <- merge_data_with_coordinates(unemp, coordinates)
-merged_data_expend<-merge_data_with_coordinates(expend, coordinates)
-merged_data_gini<-merge_data_with_coordinates(gini, coordinates)
+
+# Pobierz wszystkie wskaźniki w pętli
+indicators <- list(
+  "PKB per capita PPS (średnia UE=100)" = "tec00114",
+  "Bezrobocie (%)" = "tps00203",
+  "Wydatki rządowe (% PKB)" = "tec00023",
+  "Nierówności dochodowe" = "tessi190",
+  "Odsetek zagrożonych ubóśtwem"="tespm010"
+)
+
+# Funkcja pobierająca wszystkie wskaźniki jednocześnie
+get_all_data <- function(indicators) {
+  data_list <- lapply(indicators, get_economic_data)
+  names(data_list) <- names(indicators)
+  return(data_list)
+}
+
+# Pobierz dane dla wszystkich wskaźników
+all_data <- get_all_data(indicators)
+merge_all_data_with_coordinates <- function(data_list, coordinates) {
+  merged_list <- lapply(data_list, function(data) {
+    merge_data_with_coordinates(data, coordinates)
+  })
+  return(merged_list)
+}
+
+merged_all_data <- merge_all_data_with_coordinates(all_data, coordinates)
+
+
 
 # Tworzenie obiektów sf (sf = Simple Features)
-countries_sf_gdp <- st_as_sf(merged_data_gdp, coords = c("longitude", "latitude"), crs = 4326)
-countries_sf_unemp <- st_as_sf(merged_data_unemp, coords = c("longitude", "latitude"), crs = 4326)
+
 
 # UI aplikacji
 # UI aplikacji
@@ -83,7 +108,8 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput("indicator", "Wybierz wskaźnik:", 
                   choices = c("PKB per capita PPS (średnia UE=100)", "Bezrobocie (%)", 
-                              "Wydatki rządowe (% PKB)", "Nierówności dochodowe")),  # Wybór wskaźnika
+                              "Wydatki rządowe (% PKB)", "Nierówności dochodowe", 
+                              "Odsetek zagrożonych ubóśtwem")),  # Wybór wskaźnika
       sliderInput("weight", "Waga wskaźnika kompozytowego:", 0, 1, 0.5)
     ),
     mainPanel(
@@ -108,23 +134,11 @@ server <- function(input, output, session) {
   
   # Funkcja do renderowania mapy na podstawie wybranego wskaźnika
   output$map <- renderLeaflet({
-    # Wybór danych na podstawie wskaźnika
-    data <- reactive({
-      if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
-        data <- merged_data_gdp
-      } else if(input$indicator == "Bezrobocie (%)") {
-        data <- merged_data_unemp
-      } else if(input$indicator == "Wydatki rządowe (% PKB)") {
-        data <- merged_data_expend
-      } else if (input$indicator == "Nierówności dochodowe") {
-        data<-merged_data_gini
-      }
-      data
-    })()
+    # Pobierz dane dla wybranego wskaźnika
+    data <- merged_all_data[[input$indicator]]
     
-    # Wybór koloru w zależności od wartości wskaźnika
+    # Tworzenie mapy
     color_pal <- colorNumeric(palette = "YlOrRd", domain = data$value)
-    
     leaflet() %>%
       addTiles() %>%
       addCircleMarkers(
@@ -139,51 +153,30 @@ server <- function(input, output, session) {
   })
   
   
+  
   # Obsługa kliknięcia na mapie: Przeniesienie do zakładki z danymi
   observeEvent(input$map_shape_click, {
     country_iso2 <- input$map_shape_click$id
+    selected_data <- merged_all_data[[input$indicator]] %>%
+      filter(iso2 == country_iso2)
     
-    # Wybieranie danych na podstawie wybranego wskaźnika
-    selected_data <- if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
-      merged_data_gdp %>% filter(iso2 == country_iso2)
-    } else if(input$indicator == "Bezrobocie (%)") {
-      merged_data_unemp %>% filter(iso2 == country_iso2)
-    } else if (input$indicator == "Wydatki rządowe (% PKB)") {
-      merged_data_expend %>% filter(iso2 == country_iso2)
-    } else if (input$indicator == "Nierówności dochodowe") {
-      merged_data_gini %>% filter(iso2 == country_iso2)
-    }
-    # Jeśli dane istnieją, wyświetlamy szczegóły
+    # Aktualizacja szczegółów
     output$selectedCountryDetails <- renderText({
       paste("Kraj:", selected_data$country, 
             "\n", input$indicator, ":", round(selected_data$value, 2))
     })
-    
-    # Dynamiczne przełączanie na zakładkę szczegółów
-    updateTabsetPanel(session, "mainTabs", selected = "Szczegóły")
-    
-    # Aktualizowanie tekstu z informacjami o wybranym kraju w zakładce "Mapa"
-    output$selectedCountry <- renderText({
-      paste("Kliknięto na kraj:", selected_data$country)
-    })
   })
+  
   
   
   # Reactive data - Obliczenie danych w zależności od wybranych wskaźników
   reactive_data <- reactive({
-    if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
-      data <- merged_data_gdp
-    } else if(input$indicator == "Bezrobocie (%)") {
-      data <- merged_data_unemp
-    } else if (input$indicator == "Wydatki rządowe (% PKB)") {
-      data <- merged_data_expend
-    } else if (input$indicator == "Nierówności dochodowe") {
-      data <- merged_data_gini
-    }
+    data <- merged_all_data[[input$indicator]] # Pobierz dane na podstawie wskaźnika
     data %>%
       arrange(desc(value)) %>%
       mutate(rank = row_number())
   })
+  
   
   # Renderowanie wykresu z rankingiem
   output$rankingPlot <- renderPlotly({
@@ -209,3 +202,4 @@ server <- function(input, output, session) {
 
 # Uruchomienie aplikacji
 shinyApp(ui, server)
+
