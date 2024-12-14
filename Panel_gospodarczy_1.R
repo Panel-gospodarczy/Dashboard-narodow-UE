@@ -5,8 +5,6 @@ if (!require("tidyr")) install.packages("tidyr", dependencies = TRUE)
 if (!require("sf")) install.packages("sf", dependencies = TRUE)
 if (!require("DT")) install.packages("DT", dependencies = TRUE)
 if (!require("plotly")) install.packages("plotly", dependencies = TRUE)
-if (!require("eurostat")) install.packages("eurostat", dependencies = TRUE)
-
 library(shiny)
 library(leaflet)
 library(dplyr)
@@ -16,10 +14,9 @@ library(DT)
 library(plotly)
 library(shiny)
 library(leaflet)
-library(eurostat)
 
 
-# Funkcja do pobrania danych (dla PKB i bezrobocia)
+# Funkcja do pobrania danych 
 get_economic_data <- function(indicator) {
   data <- eurostat::get_eurostat(indicator, time_format = "num") %>%
     select(geo, TIME_PERIOD, values) %>%
@@ -35,10 +32,10 @@ get_economic_data <- function(indicator) {
 # Pobranie danych PKB per capita PPS i bezrobocia
 gdp_pps <- get_economic_data("tec00114") #PKB PPS
 unemp <- get_economic_data("tps00203") #bezrobocie
-expend<-get_economic_data("tec00023")  #wydatki rządowe
+expend<-get_economic_data("tec00023")  #Wydatki rządowe (% PKB)
 
 # Lista dostępnych wskaźników
-indicators <- c("PKB per capita (PPS)" = "tec00114", "Bezrobocie" = "tps00203","Wydatki rządowe" = "tec00023")
+indicators <- c("PKB per capita PPS (średnia UE=100)" = "tec00114", "Bezrobocie" = "tps00203","Wydatki rządowe (% PKB)" = "tec00023")
 
 # Definiowanie współrzędnych geograficznych
 coordinates <- data.frame(
@@ -79,7 +76,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("indicator", "Wybierz wskaźnik:", 
-                  choices = c("PKB per capita (PPS)", "Bezrobocie", "Wydatki rządowe")),  # Wybór wskaźnika
+                  choices = c("PKB per capita PPS (średnia UE=100)", "Bezrobocie (%)", "Wydatki rządowe (% PKB)")),  # Wybór wskaźnika
       sliderInput("weight", "Waga wskaźnika kompozytowego:", 0, 1, 0.5)
     ),
     mainPanel(
@@ -106,9 +103,9 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     # Wybór danych na podstawie wskaźnika
     data <- reactive({
-      if(input$indicator == "PKB per capita (PPS)") {
+      if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
         data <- merged_data_gdp
-      } else if(input$indicator == "Stopa bezrobocia") {
+      } else if(input$indicator == "Bezrobocie (%)") {
         data <- merged_data_unemp
       } else {
         data <- merged_data_expend
@@ -138,9 +135,9 @@ server <- function(input, output, session) {
     country_iso2 <- input$map_shape_click$id
     
     # Wybieranie danych na podstawie wybranego wskaźnika
-    selected_data <- if(input$indicator == "PKB per capita (PPS)") {
+    selected_data <- if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
       merged_data_gdp %>% filter(iso2 == country_iso2)
-    } else if(input$indicator == "Stopa bezrobocia") {
+    } else if(input$indicator == "Bezrobocie (%)") {
       merged_data_unemp %>% filter(iso2 == country_iso2)
     } else {
       merged_data_expend %>% filter(iso2 == country_iso2)
@@ -164,9 +161,9 @@ server <- function(input, output, session) {
   
   # Reactive data - Obliczenie danych w zależności od wybranych wskaźników
   reactive_data <- reactive({
-    if(input$indicator == "PKB per capita (PPS)") {
+    if(input$indicator == "PKB per capita PPS (średnia UE=100)") {
       data <- merged_data_gdp
-    } else if(input$indicator == "Stopa bezrobocia") {
+    } else if(input$indicator == "Bezrobocie (%)") {
       data <- merged_data_unemp
     } else {
       data <- merged_data_expend
@@ -200,4 +197,3 @@ server <- function(input, output, session) {
 
 # Uruchomienie aplikacji
 shinyApp(ui, server)
-
