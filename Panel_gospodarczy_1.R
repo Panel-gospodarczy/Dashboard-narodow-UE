@@ -32,16 +32,36 @@ get_economic_data <- function(indicator) {
   return(data)
 }
 
-# Pobranie danych PKB per capita PPS i bezrobocia
+# Pobranie danych 
 gdp_pps <- get_economic_data("tec00114") #PKB PPS
 unemp <- get_economic_data("tps00203") #bezrobocie
 expend<-get_economic_data("tec00023")  #Wydatki rządowe (% PKB)
 gini<-get_economic_data("tessi190")  #wskaznik giniego
 poverty<-get_economic_data("tespm010") #zagrozeni ubóstwem
+export <- get_economic_data("tet00003") #eksport % w PKB
+import <- get_economic_data("tet00004") #import % w PKB 
+gini<-get_economic_data("tessi190")  #współczynnik giniego dla dochodu rozporządzalnego ekwiwalentnego 
+house<-get_economic_data("tipsho60")  #standaryzowany wskaźnik ceny domu do dochdu
+avg_wage<-get_economic_data("nama_10_fte") #średnie pensja skorygowana na pełen etat na pracownika, Nie ma Holandii
+
+## dane, z którymi jest problem 
+####consumption <-get_economic_data("tec00134") #kwydatki konsumpcyjne gospodarstw domowych --> posiada filtry
+####min_wage<-get_economic_data("tps00155") #płaca minimalna, dane połroczne --> nie posiada do tego filtra
+####tax<-get_economic_data("gov_10a_taxag") #agregaty podatkowe --> posiada filtry
+####health<-get_economic_data("tps00207")  #całkowite wydatki na opiekę zdrowotną --> posiada filtry
+####work_efficiency<-get_economic_data("nama_10_lp_ulc")  #wydajność pracy --> posiada filtry
+
 # Lista dostępnych wskaźników
 indicators <- c("PKB per capita PPS (średnia UE=100)" = "tec00114",
-                "Bezrobocie" = "tps00203","Wydatki rządowe (% PKB)" = "tec00023",
-                "Nierówności dochodowe"="tessi190","Odsetek zagrożonych ubóśtwem"="tespm010")
+                "Bezrobocie" = "tps00203",
+                "Wydatki rządowe (% PKB)" = "tec00023",
+                "Nierówności dochodowe"="tessi190",
+                "Odsetek zagrożonych ubóśtwem"="tespm010",
+                "Eksport % PKB"="tet00003",
+                "Import % PKB"="tet00004",
+                "Gini"="tessi190", 
+                "Wskaźnik cen mieszkań do dochodów (2015=100)"="tipsho60", 
+                "Średnia roczna płaca w euro (pełny etat)"="nama_10_fte")
 
 # Definiowanie współrzędnych geograficznych
 coordinates <- data.frame(
@@ -74,8 +94,12 @@ indicators <- list(
   "Bezrobocie (%)" = "tps00203",
   "Wydatki rządowe (% PKB)" = "tec00023",
   "Nierówności dochodowe" = "tessi190",
-  "Odsetek zagrożonych ubóśtwem"="tespm010"
-)
+  "Odsetek zagrożonych ubóśtwem"="tespm010",
+  "Eksport % PKB"="tet00003",
+  "Import % PKB"="tet00004",
+  "Gini"="tessi190", 
+  "Wskaźnik cen mieszkań do dochodów (2015=100)"="tipsho60", 
+  "Średnia roczna płaca w euro (pełny etat)"="nama_10_fte")
 
 # Funkcja pobierająca wszystkie wskaźniki jednocześnie
 get_all_data <- function(indicators) {
@@ -107,9 +131,16 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("indicator", "Wybierz wskaźnik:", 
-                  choices = c("PKB per capita PPS (średnia UE=100)", "Bezrobocie (%)", 
-                              "Wydatki rządowe (% PKB)", "Nierówności dochodowe", 
-                              "Odsetek zagrożonych ubóśtwem")),  # Wybór wskaźnika
+                  choices = c("PKB per capita PPS (średnia UE=100)", 
+                              "Bezrobocie (%)", 
+                              "Wydatki rządowe (% PKB)", 
+                              "Nierówności dochodowe", 
+                              "Odsetek zagrożonych ubóśtwem",
+                              "Eksport % PKB",
+                              "Import % PKB",
+                              "Gini", 
+                              "Wskaźnik cen mieszkań do dochodów (2015=100)", 
+                              "Średnia roczna płaca w euro (pełny etat)")),  # Wybór wskaźnika
       sliderInput("weight", "Waga wskaźnika kompozytowego:", 0, 1, 0.5)
     ),
     mainPanel(
@@ -202,4 +233,3 @@ server <- function(input, output, session) {
 
 # Uruchomienie aplikacji
 shinyApp(ui, server)
-
