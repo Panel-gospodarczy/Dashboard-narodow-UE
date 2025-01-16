@@ -48,7 +48,9 @@ Uruchom kod klikając „Run App” w prawym górnym rogu konsoli.
 3.4.	Wyświetlanie aplikacji
 
 Aplikacja otworzy się w środowisku RStudio.
+
 Aplikację otworzyć można także w domyślnej przeglądarce internetowej klikając „Open in Browser”.
+
 Jeśli aplikacja nie otworzy się automatycznie, skopiuj i wklej adres URL wyświetlony w konsoli R do przeglądarki,
 
 4.	Użytkowanie aplikacji
@@ -62,7 +64,9 @@ Zamknij przeglądarkę/RStudio.
 6.	Rozwiązywanie problemów
    
 Brakujące pakiety - Upewnij się, że wszystkie wymagane pakiety zostały poprawnie zainstalowane.
+
 Problemy z przeglądarką - Sprawdź, czy przeglądarka jest zaktualizowana do najnowszej wersji oraz czy nastąpiło poprawne połączenie z siecią. 
+
 Błędy w działaniu aplikacji - Skonsultuj się z twórcą aplikacji.
 
 Najprostszy sposób na dostęp do aplikacji: Można otworzyć ją bezpośrednio przez link: https://sdziadko.shinyapps.io/bogactwo-narodow/
