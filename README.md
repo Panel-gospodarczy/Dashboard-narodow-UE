@@ -36,6 +36,7 @@ Licencja użytkowania Aplikacja jest dostępna dla każdego na zasadach:
 • Możliwości tworzenia projektów pochodnych, które muszą być udostępniane na tych samych zasadach.
 
       Dane
+      j
 
 Dane gospodarcze wykorzystywane w aplikacji pochodzą z zewnętrznego źródła, jakim jest Eurostat. Dane te nie są objęte własnymi prawami autorskimi.
 
