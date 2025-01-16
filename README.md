@@ -2,6 +2,7 @@ DOKUMENTACJA APLIKACJI „DASHBOARD BOGACTWA KRAJÓW UNII EUROPEJSKIEJ”
 
 Klaudia Dobrowolska 276 174, Sebastian Dziadko 275 323
 Aplikacja dostępna pod linkiem: https://sdziadko.shinyapps.io/bogactwo-narodow/
+
 **Charakterystyka oprogramowania**
 
 Nazwa skrócona:
