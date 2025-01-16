@@ -48,7 +48,7 @@ w celach niekomercyjnych.
 
 2. OGRANICZENIA I ZAKAZY
 
-   2.1 Kopiowanie i dystrybucja
+2.1 Kopiowanie i dystrybucja
 
 Dozwolone jest kopiowanie, dystrybucja i udostępnianie aplikacji zgodnie  
 z warunkami licencji CC BY-NC-SA 4.0.
