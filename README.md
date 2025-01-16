@@ -2,9 +2,7 @@ DOKUMENTACJA APLIKACJI „DASHBOARD BOGACTWA KRAJÓW UNII EUROPEJSKIEJ”
 
 Klaudia Dobrowolska 276 174, Sebastian Dziadko 275 323
 
-Aplikacja dostępna jest pod linkiem: https://sdziadko.shinyapps.io/bogactwo-narodow/
-
-1. Charakterystyka oprogramowania
+**Charakterystyka oprogramowania**
 
 Nazwa skrócona:
 
@@ -18,7 +16,7 @@ Opis:
 
 Aplikacja to narzędzie edukacyjno-poznawcze, stworzone z myślą o użytkownikach na różnych poziomach zaawansowania w pracy z danymi. Pobiera ona dane dotyczące trzynastu wybranych wskaźników gospodarczych\*, bezpośrednio z Eurostatu, co gwarantuje aktualność i wiarygodność danych. Na podstawie tych danych generowane są szczegółowe tabele i wykresy, umożliwiające użytkownikom analizę. Dodatkowo, dane te służą do stworzenia, na podstawie wiedzy eksperckiej, wskaźnika kompozytowego, umożliwiającego porządkowanie krajów według ich bogactwa, za pomocą rankingu. Interaktywna mapa w łatwy i przejrzysty sposób dostarcza informacji o poszczególnych krajach.
 
-1. Prawa autorskie
+**Prawa autorskie**
 
 Niniejszy dokument, dotyczący praw autorskich aplikacji „BOGACTWO NARODÓW”, powstał w celu ochrony praw własności intelektualnej właścicieli aplikacji oraz zapewnienia zgodności z obowiązującymi przepisami prawnymi.
 
@@ -64,7 +62,7 @@ Wykorzystywanie aplikacji w celach komercyjnych jest niedozwolone. Wszelkie wyj�
 
 W przypadku naruszenia praw autorskich, właściciele zastrzegają sobie prawo do podjęcia odpowiednich kroków prawnych, w tym dochodzenia roszczeń odszkodowawczych i żądania zaprzestania działań naruszających prawa autorskie.
 
-1. Specyfikacja wymagań
+**Specyfikacja wymagań**
 
 | **Identyfikator** | **Nazwa** | **Opis** | **Priorytet\*** | **Kategoria** |
 | --- | --- | --- | --- | --- |
@@ -85,8 +83,9 @@ W przypadku naruszenia praw autorskich, właściciele zastrzegają sobie prawo d
 
 \* 1 – wymagane; 2 – przydatne; 3 – opcjonalne
 
-1. Architektura systemu/oprogramowania
-    1. Architektura rozwoju
+**Architektura systemu/oprogramowania**
+
+Architektura rozwoju
 
 | **Nazwa** | **Przeznaczenie** | **Wersja** |
 | --- | --- | --- |
@@ -99,7 +98,7 @@ W przypadku naruszenia praw autorskich, właściciele zastrzegają sobie prawo d
 | DT  | Tworzenie interaktywnych tabel. | 0.27 |
 | eurostat | Pobieranie danych statystycznych z Eurostatu. | 3.8.4 |
 
-- 1. Architektura uruchomienia
+Architektura uruchomienia
 
 | **Nazwa** | **Przeznaczenie** | **Wersja** |
 | --- | --- | --- |
@@ -113,8 +112,9 @@ W przypadku naruszenia praw autorskich, właściciele zastrzegają sobie prawo d
 | eurostat | Pobieranie danych statystycznych z Eurostatu. | 3.8.4 |
 | Przeglądarka internetowa | Wyświetlanie aplikacji. | najnowsza |
 
-1. Testy
-    1. Scenariusze testów
+**Testy**
+
+Scenariusze testów
 
 | **Identyfikator** | **Opis testu** | **Oczekiwany wynik** | **ID wymagań** |
 | --- | --- | --- | --- |
@@ -128,7 +128,7 @@ W przypadku naruszenia praw autorskich, właściciele zastrzegają sobie prawo d
 | T8  | Sprawdzenie kompatybilności  <br>w różnych przeglądarkach. | Aplikacja działa poprawnie  <br>w Chrome, Firefox, Safari i Edge. | P12 |
 | T9  | Test powtarzalności. | Każde uruchomienie kodu powinno prowadzić do tego samego wyniku. | P8  |
 
-- 1. Sprawozdanie z wykonania scenariuszy testów
+Sprawozdanie z wykonania scenariuszy testów
 
 | **Identyfikator** | **Opis testu** | **Oczekiwany wynik** |
 | --- | --- | --- |
