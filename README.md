@@ -23,7 +23,7 @@ Niniejszy dokument, dotyczący praw autorskich aplikacji „BOGACTWO NARODÓW”
 1. PRAWA AUTORSKIE I WŁASNOŚĆ INTELEKTUALNA
 
 
-    1.1 Właściciel praw autorskich
+   1.1 Właściciel praw autorskich
 
 Aplikacja „BOGACTWO NARODÓW”, w tym jej kod źródłowy, interfejs użytkownika, dokumentacja i inne elementy powiązane, jest udostępniana na licencji Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0). Autorami są KLAUDIA DOBROWOLSKA i SEBASTIAN DZIADKO.
 
