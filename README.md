@@ -47,6 +47,7 @@ Elementy graficzne, takie jak mapy, wykresy i tabele, mogą być wykorzystywane,
 w celach niekomercyjnych.
 
 2. OGRANICZENIA I ZAKAZY
+3. 
    2.1 Kopiowanie i dystrybucja
 
 Dozwolone jest kopiowanie, dystrybucja i udostępnianie aplikacji zgodnie  
