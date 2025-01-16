@@ -3,10 +3,13 @@
 1.1.	Instalacja języka R
 
 Pobierz instalator dla języka R w wersji 4.3.1 z oficjalnej strony: https://cran.r-project.org/.
+
 Zainstaluj język R, postępując zgodnie z instrukcjami instalatora.
 
 1.2.	Instalacja RStudio
+
 Pobierz odpowiednią wersję środowiska RStudio (2023.09.1) z oficjalnej strony: https://posit.co/products/open-source/rstudio/.
+
 Zainstaluj RStudio, postępując zgodnie z instrukcjami instalatora.
 
 2.	Przygotowanie aplikacji
@@ -14,11 +17,13 @@ Zainstaluj RStudio, postępując zgodnie z instrukcjami instalatora.
 2.1.	Pobranie kodu aplikacji
 
 Pobierz pliki aplikacji z repozytorium GitHub
+
 Upewnij się, że pliki aplikacji są zapisane w dedykowanym folderze na komputerze.
 
 2.2.	Ustawienie folderu roboczego
 
 W RStudio otwórz menu „Session” → „Set Working Directory” → „Choose Directory”.
+
 Wskaż folder, w którym znajdują się pliki aplikacji.
 
 3.	Uruchamianie aplikacji
@@ -27,7 +32,9 @@ Wskaż folder, w którym znajdują się pliki aplikacji.
 3.1.	Otwieranie aplikacji
 
 Otwórz RStudio. 
+
 Następnie rozwiń „File”, wybierz „Open File” i wskaż plik aplikacji (np. app.R).
+
 Upewnij się, że wszystkie wymagane pliki znajdują się w jednym miejscu.
 
 3.2.	Instalacja pakietów R
