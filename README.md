@@ -21,11 +21,11 @@ Aplikacja to narzędzie edukacyjno-poznawcze, stworzone z myślą o użytkownika
 Niniejszy dokument, dotyczący praw autorskich aplikacji „BOGACTWO NARODÓW”, powstał w celu ochrony praw własności intelektualnej właścicieli aplikacji oraz zapewnienia zgodności z obowiązującymi przepisami prawnymi.
 
 1 PRAWA AUTORSKIE I WŁASNOŚĆ INTELEKTUALNA
-    a. Właściciel praw autorskich
+     Właściciel praw autorskich
 
 Aplikacja „BOGACTWO NARODÓW”, w tym jej kod źródłowy, interfejs użytkownika, dokumentacja i inne elementy powiązane, jest udostępniana na licencji Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0). Autorami są KLAUDIA DOBROWOLSKA i SEBASTIAN DZIADKO.
 
-     b. Licencja użytkowania
+      Licencja użytkowania
 
 Licencja użytkowania Aplikacja jest dostępna dla każdego na zasadach:
 
@@ -35,26 +35,26 @@ Licencja użytkowania Aplikacja jest dostępna dla każdego na zasadach:
 
 • Możliwości tworzenia projektów pochodnych, które muszą być udostępniane na tych samych zasadach.
 
-     c. Dane
+      Dane
 
 Dane gospodarcze wykorzystywane w aplikacji pochodzą z zewnętrznego źródła, jakim jest Eurostat. Dane te nie są objęte własnymi prawami autorskimi.
 
-    d. Materiały graficzne
+     Materiały graficzne
 
 Elementy graficzne, takie jak mapy, wykresy i tabele, mogą być wykorzystywane, modyfikowane i udostępniane, z zachowaniem uznania autorstwa i wyłącznie  
 w celach niekomercyjnych.
 
 2. OGRANICZENIA I ZAKAZY
-    a. Kopiowanie i dystrybucja
+     Kopiowanie i dystrybucja
 
 Dozwolone jest kopiowanie, dystrybucja i udostępnianie aplikacji zgodnie  
 z warunkami licencji CC BY-NC-SA 4.0.
 
-    b. Modyfikacje
+     Modyfikacje
 
 Modyfikacje aplikacji są dozwolone, pod warunkiem zachowania zgodności z licencją oraz uznania autorstwa.
 
-    c. Wykorzystanie w celach komercyjnych
+     Wykorzystanie w celach komercyjnych
 
 Wykorzystywanie aplikacji w celach komercyjnych jest niedozwolone. Wszelkie wyjątki wymagają zawarcia odrębnej umowy z autorami.
 
