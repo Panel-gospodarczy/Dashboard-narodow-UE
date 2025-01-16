@@ -1,6 +1,7 @@
 1.	Instalacja środowiska
 
 1.1.	Instalacja języka R
+
 Pobierz instalator dla języka R w wersji 4.3.1 z oficjalnej strony: https://cran.r-project.org/.
 Zainstaluj język R, postępując zgodnie z instrukcjami instalatora.
 
