@@ -50,7 +50,7 @@ w celach niekomercyjnych.
 Dozwolone jest kopiowanie, dystrybucja i udostępnianie aplikacji zgodnie  
 z warunkami licencji CC BY-NC-SA 4.0.
 
-    2.2. Modyfikacje
+   2.2. Modyfikacje
 
 Modyfikacje aplikacji są dozwolone, pod warunkiem zachowania zgodności z licencją oraz uznania autorstwa.
 
